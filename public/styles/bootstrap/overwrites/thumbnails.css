@@ -1,0 +1,10 @@
+.thumbnail:hover {
+   text-decoration: none;
+   color: inherit;
+   border-color: auto
+}
+.thumbnail {
+   border: none
+}
+
+

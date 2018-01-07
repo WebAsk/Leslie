@@ -1,0 +1,388 @@
+<?php
+
+/* 
+ * Copyright (C) 2017 WebAsk di Francesco Luti
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+//======================================================================
+// PRELIMINARY CHECKS
+//======================================================================
+
+    defined('PROJECT_ROOT') or die('Framework can\'t start because Application not run.');
+
+//======================================================================
+// PHP SETTINGS
+//======================================================================
+
+    if ($_SERVER['REMOTE_ADDR'] == '127.0.0.1' || $_SERVER['HTTP_HOST'] == 'localhost') {
+
+       ini_set('display_errors', 1);
+       ini_set('display_startup_errors', 1);
+       error_reporting(E_ALL);
+
+    } else {
+
+       ini_set('display_errors', 0);
+
+    }
+
+//======================================================================
+// VARIABLES
+//======================================================================
+
+    //-----------------------------------------------------
+    // Framework Constants
+    //-----------------------------------------------------
+
+        /*
+        * You can't change framework references:
+        * FRAMEWORK_NAME & FRAMEWORK_COMPANY... data
+        */
+
+        define('FRAMEWORK_NAME', 'Leslie');
+
+        define('FRAMEWORK_PHP_VERSION', '5.4.0');
+
+        if(version_compare(PHP_VERSION, FRAMEWORK_PHP_VERSION, '<')){
+            die('Needs PHP ' . FRAMEWORK_PHP_VERSION . ' or higher to run');
+        }
+
+        define('FRAMEWORK_COMPANY_NAME', 'WebAsk');
+        define('FRAMEWORK_COMPANY_DOMAIN', 'webask.it');
+        define('FRAMEWORK_COMPANY_ADDRESS', ''); // 
+        define('FRAMEWORK_COMPANY_VAT', '06591130486');
+        define('FRAMEWORK_COMPANY_EMAIL', 'support@' . FRAMEWORK_COMPANY_DOMAIN);
+        define('FRAMEWORK_COMPANY_PHONE', '');
+
+        define('FRAMEWORK_PATH',  __DIR__);
+
+        define('FRAMEWORK_PATH_CONTROLL', FRAMEWORK_PATH . DIRECTORY_SEPARATOR . 'controllers');
+        define('FRAMEWORK_PATH_MOD', FRAMEWORK_PATH . DIRECTORY_SEPARATOR . 'models');
+        define('FRAMEWORK_PATH_VIEW', FRAMEWORK_PATH . DIRECTORY_SEPARATOR . 'views');
+        define('FRAMEWORK_PATH_CORE', FRAMEWORK_PATH . DIRECTORY_SEPARATOR . 'core');
+        define('FRAMEWORK_PATH_SQL', FRAMEWORK_PATH . DIRECTORY_SEPARATOR . 'queries');
+        define('FRAMEWORK_PATH_LANG', FRAMEWORK_PATH . DIRECTORY_SEPARATOR . 'languages');
+        define('FRAMEWORK_PATH_TPL', FRAMEWORK_PATH . DIRECTORY_SEPARATOR . 'templates');
+        define('FRAMEWORK_PATH_LIB', FRAMEWORK_PATH . DIRECTORY_SEPARATOR . 'libraries');
+        define('FRAMEWORK_PATH_LOGS', FRAMEWORK_PATH . DIRECTORY_SEPARATOR . 'logs');
+        define('FRAMEWORK_PATH_PROJECTS', FRAMEWORK_PATH . DIRECTORY_SEPARATOR . 'projects');
+
+        define('FRAMEWORK_PATH_DOC', FRAMEWORK_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'documents');
+
+        define('PROJECT_FOLDER', str_replace('/' . basename($_SERVER['PHP_SELF']), null, $_SERVER['PHP_SELF']));
+
+        if ($_SERVER['REMOTE_ADDR'] == '127.0.0.1' || $_SERVER['HTTP_HOST'] == 'localhost') {
+
+           define('FRAMEWORK_HOST', $_SERVER['HTTP_HOST']);
+           define('FRAMEWORK_FOLDER', '/' . basename(__DIR__) . '/public');
+
+        } else {
+
+           define('FRAMEWORK_HOST', ''); // CDN Host: Important to set for production mode
+           define('FRAMEWORK_FOLDER', null);
+
+        }
+
+        define('FRAMEWORK_URL', $_SERVER['REQUEST_SCHEME'] . '://' . FRAMEWORK_HOST . FRAMEWORK_FOLDER);
+        define('FRAMEWORK_URL_CSS', FRAMEWORK_URL . '/styles');
+        define('FRAMEWORK_URL_FONTS', FRAMEWORK_URL . '/fonts');
+        define('FRAMEWORK_URL_JS', FRAMEWORK_URL . '/scripts');
+        define('FRAMEWORK_URL_PLUG', FRAMEWORK_URL . '/plugins');
+        define('FRAMEWORK_URL_IMG', FRAMEWORK_URL . '/images');
+        define('FRAMEWORK_URL_DOC', FRAMEWORK_URL . '/documents');
+        define('FRAMEWORK_URL_TPL', FRAMEWORK_URL . '/templates');
+
+        define('FRAMEWORK_LOGO', FRAMEWORK_URL_IMG . '/logos/leslie-logo-36x36.png');
+
+    //-----------------------------------------------------
+    // Framework Globals
+    //-----------------------------------------------------
+
+        $FRAMEWORK['VERSION'] = '2.0.0';
+
+    //-----------------------------------------------------
+    // Project Globals
+    //-----------------------------------------------------
+
+
+        if ($_SERVER['REMOTE_ADDR'] == '127.0.0.1' || $_SERVER['HTTP_HOST'] == 'localhost') {
+
+           $PROJECT['CAPTCHA']['SWITCH'] = 0;
+           $PROJECT['DEBUG'] = 1;
+           $PROJECT['MINIFY'] = 0;
+           $PROJECT['ONLINE'] = false;
+
+        } else {
+
+           $PROJECT['CAPTCHA']['SWITCH'] = 1;
+           $PROJECT['DEBUG'] = 0;
+           $PROJECT['MINIFY'] = 1;
+           $PROJECT['ONLINE'] = true;
+
+        }
+
+        $PROJECT['PATHS']['ROOT'] = PROJECT_ROOT;
+
+        $PROJECT['PATHS']['TEMPLATES'] = $PROJECT['PATHS']['ROOT'] . DIRECTORY_SEPARATOR . 'templates';
+        $PROJECT['PATHS']['VIEWS'] = $PROJECT['PATHS']['ROOT'] . DIRECTORY_SEPARATOR . 'views';
+        $PROJECT['PATHS']['DOCUMENTS'] = $PROJECT['PATHS']['ROOT'] . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'documents';
+
+        $PROJECT['URL']['BASE'] = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . PROJECT_FOLDER;
+
+        $PROJECT['URL']['STYLES'] = $PROJECT['URL']['BASE'] . '/styles';
+        $PROJECT['URL']['IMAGES'] = $PROJECT['URL']['BASE'] . '/images';
+        $PROJECT['URL']['DOCUMENTS'] = $PROJECT['URL']['BASE'] . '/documents';
+
+        $PROJECT['URL']['ADMIN'] = $PROJECT['URL']['BASE'] . '/admin';
+
+        $PROJECT['SOURCES'] = [
+            $PROJECT['PATHS']['ROOT'],
+            FRAMEWORK_PATH
+        ];
+
+        $PROJECT['URLS'] = [
+            $PROJECT['URL']['BASE'],
+            FRAMEWORK_URL
+        ];
+
+        $PROJECT['OFFLINE']['SWITCH'] = 0;
+        $PROJECT['OFFLINE']['END'] = '';
+
+        $PROJECT['PASSWORD'] = [
+            'REGEX' => '/^(.){4,16}$/',
+            'INFO' => 'min 4 max 16 characters',
+            'SALT' => 'a1b2c3d4e5f6g7h8'
+        ];
+
+        $PROJECT['SESSION'] = [
+            'IP' => true,
+            'AGENT' => true,
+            'COOKIE' => true,
+            'TIME' => 3600,
+            'CHECK' => true,
+            'NOTICE' => true
+        ];
+
+        $PROJECT['ITEMS']['CODE'] = [
+            'TYPE' => 'alphanumeric',
+            'LENGTH' => 8
+        ];
+
+        $PROJECT['LOGS'] = false; // se true controllare ACL root/logs
+        $PROJECT['CART'] = false;
+        $PROJECT['USER'] = array(
+            'ADMIN' => false
+        );
+        $PROJECT['ACCOUNT'] = array();
+
+        $PROJECT['DATABASE']['TYPE'] = 'mysql';
+        $PROJECT['DATABASE']['HOST'] = 'localhost';
+        $PROJECT['DATABASE']['NAME'] = '';
+        $PROJECT['DATABASE']['USER'] = '';
+        $PROJECT['DATABASE']['PASSWORD'] = '';
+
+        $PROJECT['LANGUAGE']['SIGN'] = 'it';
+
+        $PROJECT['NAME'] = 'Leslie Framework';
+        $PROJECT['SLOGAN'] = 'Modulable, scalable...able!';
+        $PROJECT['LOGO'] = FRAMEWORK_URL_IMG . '/logos/leslie-logo-light-36x36.png';
+        $PROJECT['FAVICON'] = FRAMEWORK_URL_IMG . '/favicons/favicon-32x32.png';
+        $PROJECT['DOMAIN'] = 'webask.it';
+        $PROJECT['DESCRIPTION'] = 'Web Framework open-source, MVC pattern, CDN integrato, interamente realizzato da WebAsk.';
+        $PROJECT['KEYWORDS'] = 'web, framewrok, open source, mvc pattern, cdn';
+
+        $PROJECT['SMTP'] = array(
+            'HOST' => '',
+            'PORT' => 2525,
+            'USERNAME' => '',
+            'PASSWORD' => ''
+        );
+
+        $PROJECT['MODULES'] = array(
+            array(
+                'name' => 'access',
+                'icon' => 'users',
+                'permits' => 1,
+                'methods' => array(
+                    array(
+                        'name' => 'users'
+                    ),
+                    array(
+                        'name' => 'sessions'
+                    )
+                )
+            ),
+            array(
+                'name' => 'sistem',
+                'icon' => 'cogs',
+                'permits' => 1,
+                'methods' => array(
+                    array(
+                        'name' => 'backup'
+                    )
+                )
+            )
+        );
+
+        $PROJECT['STYLES'] = [
+            FRAMEWORK_URL_FONTS . '/awesome/4.7.0/css/font-awesome.min.css',
+        ];
+
+        $PROJECT['SCRIPTS'] = array();
+
+        $PROJECT['TEMPLATE'] = 'default';
+
+        $PROJECT['CAPTCHA']['KEY'] = array(
+           'client' => '', 
+           'server' => ''
+        );
+
+        $PROJECT['GOOGLE'] = array(
+            'SEARCH' => '',
+            'TAG' => null,
+            'ANALYTICS' => '',
+            'API' => array(
+                'CLIENT_ID' => '',
+                'KEY' => ''
+            )
+        );
+
+        $PROJECT['MAILCHIMP'] = array(
+            'API' => '',
+            'LIST' => null
+        );
+
+        $PROJECT['PAYPAL'] = [
+            'CODE' => 'pay_pal',
+            'ENDPOINT' => 'https://api.sandbox.paypal.com',
+            //'ENDPOINT' => 'https://api.paypal.com',
+            'MERCHANT_ID' => '',
+            'CLIENT_ID' => '', // TO BE CHANGE IN LIVE MODE
+            'CLIENT_SECRET' => '', // TO BE CHANGE IN LIVE MODE
+            'SBN_CODE' => 'PP-DemoPortal-EC-IC-php-REST',
+            'ENV' => 'sandbox' // TEST PARAM
+            //'ENV' => 'production' // LIVE PARAM
+        ];
+
+        $PROJECT['E-MAIL'] = [
+            'ADMINISTRATOR' => 'admin@' . $PROJECT['DOMAIN'],
+            'REGISTRATIONS' => 'admin@' . $PROJECT['DOMAIN']
+        ];
+
+        $COMPANY['NAME'] = 'WebAsk';
+        $COMPANY['ADDRESS'] = '';
+        $COMPANY['TEL'] = '';
+        $COMPANY['EMAIL'] = 'info@' . $PROJECT['DOMAIN'];
+        $COMPANY['VAT']['NUMBER'] = '06591130486';
+        $COMPANY['VAT']['RATE'] = 22;
+        $COMPANY['VAT']['DOCUMENT'] = 'invoice';
+
+        $COMPANY['SOCIAL'] = array(
+            array(
+                'icon' => 'facebook',
+                'name' => 'Facebook',
+                'url' => 'https://www.facebook.com/wwwebaskit'
+            ),
+             array(
+               'icon' => 'google-plus',
+               'name' => 'Google Plus',
+               'url' => 'https://plus.google.com/+webaskit'
+            ),
+            array(
+                'icon' => 'twitter',
+                'name' => 'twitter',
+                'url' => 'https://twitter.com/wwwebaskit'
+            ),
+            array(
+                'icon' => 'youtube',
+                'name' => 'You Tube',
+                'url' => 'https://www.youtube.com/user/WebAskIt'
+            ),
+            array(
+                'icon' => 'linkedin',
+                'name' => 'Linkedin',
+                'url' => 'https://www.linkedin.com/company/webask'
+            ),
+            array(
+                'icon' => 'github',
+                'name' => 'GitHub',
+                'url' => 'https://github.com/WebAsk'
+            )
+        );
+
+        $LOGS = array();
+
+//======================================================================
+// AUTOLOAD FUNCTIONS
+//======================================================================
+
+spl_autoload_register(
+
+    function ($class_name) {
+
+        $class_name = trim($class_name, '\\');
+
+        if (strstr($class_name, 'project')) {
+
+            $class_path = str_replace(array('/','\\'), DIRECTORY_SEPARATOR, str_replace('project\\', null, $class_name));
+            $file = $GLOBALS['PROJECT']['PATHS']['ROOT'] . DIRECTORY_SEPARATOR . $class_path . '.php';
+            $GLOBALS['LOGS']['autoload'][] = $file;
+
+            if (file_exists($file)) {
+               $GLOBALS['LOGS']['required'][] = $file;
+               require_once($file);
+               return;
+            }
+
+         } else if (strstr($class_name, 'framework')) {
+
+            $class_path = str_replace(array('/','\\'), DIRECTORY_SEPARATOR, str_replace('framework\\', null, $class_name));
+
+            if (file_exists($file = FRAMEWORK_PATH . DIRECTORY_SEPARATOR . $GLOBALS['FRAMEWORK']['VERSION'] . DIRECTORY_SEPARATOR . $class_path . '.php')) {
+
+                $GLOBALS['LOGS']['autoload'][] = $file;
+                $GLOBALS['LOGS']['required'][] = $file;
+                require_once($file);
+                return;
+
+            } else if (file_exists($file = FRAMEWORK_PATH . DIRECTORY_SEPARATOR . $class_path . '.php')) {
+
+                $GLOBALS['LOGS']['autoload'][] = $file;
+                $GLOBALS['LOGS']['required'][] = $file;
+                require_once($file);
+                return;
+            }
+            //die('Not found: ' . $class_name);
+
+         } else {
+
+            $autoload_dir = array(
+               FRAMEWORK_PATH_CORE,
+               FRAMEWORK_PATH_LIB
+            );
+
+            foreach ($autoload_dir as $dir) {
+               $file = $dir . DIRECTORY_SEPARATOR . $class_name . '.php';
+               $GLOBALS['LOGS']['autoload'][] = $file;
+               if (file_exists($file)) {
+                  $GLOBALS['LOGS']['required'][] = $file;
+                  require_once($file);
+                  return;
+               }
+            }
+        }
+    }
+);

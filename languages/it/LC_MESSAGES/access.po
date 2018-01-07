@@ -1,0 +1,130 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-12-29 18:10+0100\n"
+"PO-Revision-Date: 2018-01-06 11:44+0100\n"
+"Last-Translator: WebAsk <doyou@webask.it>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: it\n"
+
+# GENERIC MESSAGES
+msgid "Dear"
+msgstr "Caro"
+
+msgid "User"
+msgstr "Utente"
+
+msgid "Invalid request"
+msgstr "Richiesta non valida"
+
+msgid "Please contact"
+msgstr "Perfavore contatta"
+
+msgid "Wrong captcha code"
+msgstr "Codice captcha errato"
+
+msgid "Wrong e-mail address"
+msgstr "Indirizzo e-mail errato"
+
+msgid "Account not found"
+msgstr "Account non trovato"
+
+msgid "Passwords do not match"
+msgstr "Le password non coincidono"
+
+msgid "This Account has been disabled"
+msgstr "Questo Account è stato disabilitato"
+
+# COOKIE
+msgid "Cookie storage is disabled on your browser"
+msgstr "Il salvataggio dei cookie è disabilitato sul tuo browser"
+
+# SIGNUP CONFIRM
+msgid "This e-mail address exist yet"
+msgstr "Questo indirizzo e-mail è già registrato"
+
+msgid "Confirm your e-mail address"
+msgstr "Conferma il tuo indirizzo e-mail"
+
+msgid "You have not confirmed your e-mail address. For activate your account you need to confirm your e-mail address. Follow the link below to confirm."
+msgstr "Non hai ancora confermato il tuo indirizzo e-mail. Per attivare il tuo account è necessario eseguire questa operazione. Clicca sul seguente link per confermare."
+
+msgid "Unconfirmed e-mail address"
+msgstr "Indirizzo e-mail non confermato"
+
+msgid "Please check your inbox and confirm"
+msgstr "Perfavore controlla la tua casella di posta e conferma"
+
+# LOGIN
+msgid "Log in to your Account"
+msgstr "Accedi al tuo Account"
+
+msgid "First access"
+msgstr "Primo accesso"
+
+msgid "For security reason you have to confirm your first access on platform following the next link"
+msgstr "Per ragioni di sicurezza è necessario confermare il primo accesso alla piattaforma cliccando sul seguente collegamento"
+
+msgid "First access with new device"
+msgstr "Primo accesso da un nuovo dispositivo"
+
+msgid "System has detected an attempt to access the platform through an ever verified device or application. Please confirm this new access by clicking on the following link"
+msgstr "Il sistema ha rilevato un tentativo di accesso alla piattaforma tramite un dispositivo o un'applicazione mai verificata. Perfavore conferma questo nuovo accesso cliccando sul seguente collegamento"
+
+msgid "If you are not logged in, do not click on the link and delete this message. In case of further attempts, contact us"
+msgstr "Se non sei tu ad aver effettuato l'accesso non cliccare sul collegamento e cancella questo messaggio. In caso di ulteriori tentativi, contattaci"
+
+msgid "Access from new device unconfirmed"
+msgstr "Accesso da un nuovo dispositivo non confermato"
+
+msgid "System has detected a further attempt at access never confirmed by a new device or application. Please unlock the check by clicking on the following link"
+msgstr "Il sistema ha rilevato un ulteriore tentativo di accesso mai confermato da un nuovo dispositivo o applicazione. Perfavore sblocca il controllo cliccando sul seguente collegamento"
+
+msgid "First access from a new network"
+msgstr "Primo accesso da una nuova rete"
+
+msgid "The system detected an attempt to access through a network that has never been verified. For security reasons it is necessary to confirm this new access by clicking on the following link"
+msgstr "Il sistema ha rilevato un tentativo di accesso attraverso una rete mai verificata. Per ragioni di sicurezza è necessario confermare questo nuovo accesso facendo clic sul seguente collegamento"
+
+msgid "Access from an unconfirmed network"
+msgstr "Accesso da una rete non confermato"
+
+msgid "The system has detected a further attempt to access from a network that has never been verified. For security reasons, you must unlock the control by clicking on the following link"
+msgstr "Il sistema ha rilevato un ulteriore tentativo di accesso da una rete che non è mai stata verificata. Per motivi di sicurezza è necessario sbloccare il controllo facendo clic sul seguente collegamento"
+
+msgid "New account access"
+msgstr "Nuovo accesso all'account"
+
+msgid "New access to your Account is just been detected. If you are not logged in and you want to block it, you can do so by clicking the following link. Otherwise we recommend avoiding the operation because a further security check would be necessary later"
+msgstr "É stato appena effettuato un accesso al tuo Account. Se non sei tu ad aver effettuato l'accesso e vuoi bloccarlo, puoi farlo cliccando il seguente collegamento. Altrimenti consigliamo di evitare l'operazione perché successivamente sarebbe necessario un ulteriore controllo di sicurezza"
+
+msgid "Access has been blocked"
+msgstr "L'accesso indicato è stato bloccato"
+
+# PASSWORD RESET
+msgid "Reset your Account password"
+msgstr "Reimposta la password del tuo Account"
+
+msgid "Please check your inbox and follow the instructions"
+msgstr "Perfavore controlla la tua casella di posta e segui le istruzioni"
+
+msgid "To reset your account password follow the link below"
+msgstr "Per reimpostare la password del tuo Account segui il collegamento sottostante"
+
+msgid "If you are not prompting to reset your password, please ignore and delete this message. Nobody has come to know your access data."
+msgstr "Se non sei tu ad aver richiesto la reimpostazione della tua password, ignora e cancella questo messaggio. Nessuno è venuto a conoscenza dei tuoi dati di accesso."
+
+msgid "Impossible to reset password. Please retry to recovery, else contact"
+msgstr "Impossibile reimpostare la password. Perfavore riprova a recuperarla, altrimenti contatta"
+
+msgid "Your Account password has been updated"
+msgstr "La password del tuo Account è stata aggiornata"
+
+msgid "Your account password has just been updated. If you believe there has been an error, contact the administrators immediately"
+msgstr "La password del tuo Account è stata appena aggiornata. Se ritieni ci sia stato un errore, contatta subito gli amministratori"

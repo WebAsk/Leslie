@@ -1,0 +1,72 @@
+/*
+Copyright (C) 2017 WebAsk di Francesco Luti
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+/* 
+    Created on : 8-dic-2017, 12.30.27
+    Author     : WebAsk di Francesco Luti
+*/
+
+header {
+    background-color: rgba(0, 0, 0, .8);
+    color: #fff
+}
+
+header img {
+    float: left;
+    height: 3em;
+    margin-right: 1em;
+}
+
+header div:nth-child(2) {
+    font-size: 2em;
+    line-height: 1em
+}
+
+.carousel-caption {
+    
+    position: absolute;
+    margin: auto;
+    width: 50%;
+    left: 23%;
+    right: 23%;
+    top: 30%;
+    bottom: 30%;
+    padding: 2%;
+    background-color: rgba(0, 0, 0, .5);
+    
+}
+
+.carousel-caption > *:first-child {
+    font-size: 3em;
+}
+
+.carousel-caption > p {
+    font-size: 1.4em;
+    line-height: 1.4em
+}
+
+.carousel-caption a {
+    color: #fff
+}
+
+footer {
+    background-color: rgba(0, 0, 0, .8);
+    color: #fff
+}
+
+footer a {
+    color: #fff
+}

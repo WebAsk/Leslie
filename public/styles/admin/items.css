@@ -1,0 +1,19 @@
+
+.item_languages {
+   background-size: 100% 100%;
+   color: #fff;
+   text-decoration: none;
+   display: inline-block;
+}
+.item_languages:hover {
+   color: #fff;
+   text-decoration: none;
+}
+.items_image {
+   height: 80px
+}
+.items_sort_handle {
+   cursor: n-resize
+}
+
+
