@@ -7,7 +7,7 @@ What is this?
 
 What is Leslie Framework?
 ---------------------
-* Leslie Framework is a **Web Framework** which enables you to build websites and powerful online applications.
+* Leslie Framework is a modulable and scalable **Web Framework** which enables you to build websites and powerful online applications.
 * Leslie Framework is a Web Framework written in **PHP**. [Read about PHP on official website](http://php.net/manual/it/intro-whatis.php).
 * Leslie Framework is a Web Framework built in **MVC pattern**. [Read about MVC pattern on Wikipedia](https://it.wikipedia.org/wiki/Model-View-Controller).
 * Leslie Framework is a Web Framework with **CDN integration**. [Read about CDN on Wikipedia](https://it.wikipedia.org/wiki/Content_Delivery_Network).

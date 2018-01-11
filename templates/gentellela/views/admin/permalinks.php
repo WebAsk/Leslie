@@ -59,7 +59,7 @@
                                 <img src="<?php echo FRAMEWORK_URL_IMG . '/languages/' . $this->languages[$item['id_language']]['sign'] ?>.png" />
                             </td>
                             <td>
-                                <a href="#" onclick="javascript: window.open('<?php echo $GLOBALS['PROJECT']['URL']['BASE'] ?>/<?php echo leslie::translate('contents') ?>/<?php echo $item['value'] ?>', '<?php echo $item['value'] ?>', 'fullscreen=yes')"><?php echo $item['value'] ?></a>
+                                <a href="#" onclick="javascript: window.open('<?php echo $GLOBALS['PROJECT']['URL']['BASE'] ?>/<?php echo leslie::translate('contents') ?>/<?php echo $item['value'] ?>', '<?php echo $item['value'] ?>', 'width=500,height=500')"><?php echo $item['value'] ?></a>
                             </td>
                             <td class="text-center">
                                 <a href="javascript:void(0)" onclick="delete_item(<?php echo $item['id'] ?>)" class="btn btn-xs btn-danger" title="<?php echo leslie::translate('delete') ?>"><i class="glyphicon glyphicon-remove"></i></a>

@@ -39,7 +39,7 @@ class admin extends account {
         
         if ($this->user['admin'] != 1) { header('location: ' . $GLOBALS['PROJECT']['URL']['BASE'] . '/account'); die; }
         
-        unset($GLOBALS['PROJECT']['GOOGLE']['ANALYTICS']);
+        $GLOBALS['PROJECT']['GOOGLE']['ANALYTICS']['TRACK'] = false;
         unset($GLOBALS['PROJECT']['GOOGLE']['TAG']);
         $this->view->cookie = false;
 

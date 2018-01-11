@@ -92,43 +92,43 @@ class view {
     }
 
     final private function getScripts() {
-       $scripts = array_merge($GLOBALS['PROJECT']['SCRIPTS'], $this->scripts);
-       $output = array();
-       foreach($scripts as $script) {
-          if(strpos($script, 'http') === 0) {
-             $output[] = '<script type="text/javascript" src="' . $script . '"></script>';
-          }elseif(strpos($script, '<script') === 0){
-             $output[] = $script;
-          }else{
-             strpos($script, '.js')? $ext = NULL:$ext = '.js';
-             foreach ($GLOBALS['PROJECT']['SOURCES'] as $key => $path) {
-                if (file_exists($path . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'scripts' . DIRECTORY_SEPARATOR . $script . $ext)) {
-                   $output[] = '<script type="text/javascript" src="' . $GLOBALS['PROJECT']['URLS'][$key] . '/scripts/' . $script . $ext . '"></script>';           
-                   break;
-                }
-             }           
-          }
-       }
-       foreach ($GLOBALS['PROJECT']['SOURCES'] as $key => $path) {
-          if (file_exists($path . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'scripts' . DIRECTORY_SEPARATOR . $this->name . '.js')) {
-             $output[] = '<script type="text/javascript" src="' . $GLOBALS['PROJECT']['URLS'][$key] . '/scripts/' . $this->name . '.js"></script>';           
-             break;
-          }
-       }
+        $scripts = array_merge($GLOBALS['PROJECT']['SCRIPTS'], $this->scripts);
+        $output = array();
+        foreach($scripts as $script) {
+           if(strpos($script, 'http') === 0) {
+              $output[] = '<script type="text/javascript" src="' . $script . '"></script>';
+           }elseif(strpos($script, '<script') === 0){
+              $output[] = $script;
+           }else{
+              strpos($script, '.js')? $ext = NULL:$ext = '.js';
+              foreach ($GLOBALS['PROJECT']['SOURCES'] as $key => $path) {
+                 if (file_exists($path . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'scripts' . DIRECTORY_SEPARATOR . $script . $ext)) {
+                    $output[] = '<script type="text/javascript" src="' . $GLOBALS['PROJECT']['URLS'][$key] . '/scripts/' . $script . $ext . '"></script>';           
+                    break;
+                 }
+              }           
+           }
+        }
+        foreach ($GLOBALS['PROJECT']['SOURCES'] as $key => $path) {
+           if (file_exists($path . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'scripts' . DIRECTORY_SEPARATOR . $this->name . '.js')) {
+              $output[] = '<script type="text/javascript" src="' . $GLOBALS['PROJECT']['URLS'][$key] . '/scripts/' . $this->name . '.js"></script>';           
+              break;
+           }
+        }
 
-       if ($this->cookie) {
-          $output[] = '<script type="text/javascript">
-          window.cookieconsent_options = {
-          "message":"Questo sito utilizza i cookie.",
-          "dismiss":"Accetto",
-          "learnMore":"Info",
-          "link":"' . $GLOBALS['PROJECT']['URL']['BASE'] . '/info/cookie",
-          "theme":"dark-bottom"
-          };
-          </script>
-          <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.js"></script>';
-       }
-       return implode(PHP_EOL, array_unique($output));
+        if ($this->cookie) {
+            $output[] = '<script type="text/javascript">
+            window.cookieconsent_options = {
+            "message":"Questo sito utilizza i cookie di terze parti. Proseguendo la navigazione se ne accetta l\'utilizzo.",
+            "dismiss":"Accetto",
+            "learnMore":"Maggiori informazioni",
+            "link":"' . $GLOBALS['PROJECT']['URL']['BASE'] . '/info/cookie",
+            "theme":"dark-bottom"
+            };
+            </script>
+            <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.js"></script>';
+        }
+        return implode(PHP_EOL, array_unique($output));
 
     }
 
@@ -150,18 +150,18 @@ class view {
         $this->head[] = "<script>var FRAMEWORK_URL = '" . FRAMEWORK_URL . "'; var PROJECT_URL = '" . $GLOBALS['PROJECT']['URL']['BASE'] . "'</script>";
         
         if (
-            !empty($GLOBALS['PROJECT']['GOOGLE']['ANALYTICS'])
+            $GLOBALS['PROJECT']['GOOGLE']['ANALYTICS']['TRACK']
             && $GLOBALS['PROJECT']['ONLINE']
             && !$GLOBALS['PROJECT']['USER']['ADMIN']
         ) {
             $this->head[] = "<!-- Global site tag (gtag.js) - Google Analytics -->
-            <script async src=\"https://www.googletagmanager.com/gtag/js?id=" . $GLOBALS['PROJECT']['GOOGLE']['ANALYTICS'] . "\"></script>
+            <script async src=\"https://www.googletagmanager.com/gtag/js?id=" . $GLOBALS['PROJECT']['GOOGLE']['ANALYTICS']['PROPERTY'] . "\"></script>
             <script>
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
 
-            gtag('config', '" . $GLOBALS['PROJECT']['GOOGLE']['ANALYTICS'] . "');
+            gtag('config', '" . $GLOBALS['PROJECT']['GOOGLE']['ANALYTICS']['PROPERTY'] . "');
             </script>";
         }
         

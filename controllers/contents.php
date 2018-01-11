@@ -39,15 +39,22 @@ class contents extends base {
         
         if (empty($type['prefix'])) { $type['prefix'] = 'items'; }
         
+        $query = 'SELECT li.id, li.id_type, li.active, p.item AS item_lang_id, p.value AS permalink, i.contents, i.joints'
+        . ' FROM items_permalinks AS p, ' . $type['prefix'] . '_languages AS la, ' . $type['prefix'] . '_list AS li, item_types AS t, items AS i'
+        . ' WHERE p.value = :permalink'
+        . ' AND la.id = p.item'
+        . ' AND li.id = la.id_content';
+        
+        if (!isset($_SERVER['HTTP_REFERER']) || !strpos($_SERVER['HTTP_REFERER'], 'admin')) {
+            
+            $query .= ' AND li.active = 1'
+            . ' AND (li.state = 0 OR li.state IN(SELECT id FROM item_states WHERE view = 1))';
+            
+        }
+        
         $this->item = $this->model->selectnoview(
                 
-            'SELECT li.id, li.id_type, li.active, p.item AS item_lang_id, p.value AS permalink, i.contents, i.joints'
-            . ' FROM items_permalinks AS p, ' . $type['prefix'] . '_languages AS la, ' . $type['prefix'] . '_list AS li, item_types AS t, items AS i'
-            . ' WHERE p.value = :permalink'
-            . ' AND la.id = p.item'
-            . ' AND li.id = la.id_content'
-            . ' AND li.active = 1'
-            . ' AND (li.state = 0 OR li.state IN(SELECT id FROM item_states WHERE view = 1))'
+            $query 
             . ' AND t.id = li.id_type'
             . ' AND i.id = t.item', 
             [

@@ -156,11 +156,11 @@ class leslie {
                 foreach ($GLOBALS['PROJECT']['SOURCES'] as $path) {
                     //echo $path . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . $view_dir . $view_name . '.php <hr>';
                     if (file_exists($path . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . $view_dir . $view_name . '.php')) {
-                       $view = $view_dir . $view_name;
-                       break;
+                        $view = $view_dir . $view_name;
+                        break;
                     } else if (is_dir($path . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . $view_dir . $view_name)) {
-                       $view_dir .= $view_name . DIRECTORY_SEPARATOR;
-                       break;
+                        $view_dir .= $view_name . DIRECTORY_SEPARATOR;
+                        break;
                     }
                 }
 

@@ -34,149 +34,141 @@
   </div>
 </div>
 
+<div id="embed-api-auth-container"></div>
+<div id="chart-container"></div>
+<div id="chart-1-container"></div>
+<div id="chart-2-container"></div>
+<!--<div id="view-selector-container"></div>-->
+
 <script>
-
-  // Replace with your client ID from the developer console.
-  var CLIENT_ID = '<?php echo $GLOBALS['PROJECT']['GOOGLE']['API']['CLIENT_ID'] ?>';
-
-  // Set authorized scope.
-  var SCOPES = ['https://www.googleapis.com/auth/analytics.readonly'];
-
-
-  function authorize(event) {
-    // Handles the authorization flow.
-    // `immediate` should be false when invoked from the button click.
-    var useImmdiate = event ? false : true;
-    var authData = {
-      client_id: CLIENT_ID,
-      scope: SCOPES,
-      immediate: useImmdiate
-    };
-
-    gapi.auth.authorize(authData, function(response) {
-      var authButton = document.getElementById('auth-button');
-      if (response.error) {
-        authButton.hidden = false;
-      }
-      else {
-        authButton.hidden = true;
-        queryAccounts();
-      }
-    });
-  }
-
-
-function queryAccounts() {
-  // Load the Google Analytics client library.
-  gapi.client.load('analytics', 'v3').then(function() {
-
-    // Get a list of all Google Analytics accounts for this user
-    gapi.client.analytics.management.accounts.list().then(handleAccounts);
-  });
-}
-
-
-function handleAccounts(response) {
-  // Handles the response from the accounts list method.
-  if (response.result.items && response.result.items.length) {
-    // Get the first Google Analytics account.
-    var firstAccountId = response.result.items[0].id;
-
-    // Query for properties.
-    queryProperties(firstAccountId);
-  } else {
-    console.log('No accounts found for this user.');
-  }
-}
-
-
-function queryProperties(accountId) {
-  // Get a list of all the properties for the account.
-  gapi.client.analytics.management.webproperties.list(
-      {'accountId': accountId})
-    .then(handleProperties)
-    .then(null, function(err) {
-      // Log any errors.
-      console.log(err);
-  });
-}
-
-
-function handleProperties(response) {
-  // Handles the response from the webproperties list method.
-  if (response.result.items && response.result.items.length) {
-
-    // Get the first Google Analytics account
-    var firstAccountId = response.result.items[0].accountId;
-
-    // Get the first property ID
-    var firstPropertyId = response.result.items[0].id;
-
-    // Query for Views (Profiles).
-    queryProfiles(firstAccountId, firstPropertyId);
-  } else {
-    console.log('No properties found for this user.');
-  }
-}
-
-
-function queryProfiles(accountId, propertyId) {
-  // Get a list of all Views (Profiles) for the first property
-  // of the first Account.
-  gapi.client.analytics.management.profiles.list({
-      'accountId': accountId,
-      'webPropertyId': propertyId
-  })
-  .then(handleProfiles)
-  .then(null, function(err) {
-      // Log any errors.
-      console.log(err);
-  });
-}
-
-
-function handleProfiles(response) {
-  // Handles the response from the profiles list method.
-  if (response.result.items && response.result.items.length) {
-    // Get the first View (Profile) ID.
-    var firstProfileId = response.result.items[0].id;
-
-    // Query the Core Reporting API.
-    queryCoreReportingApi(firstProfileId);
-  } else {
-    console.log('No views (profiles) found for this user.');
-  }
-}
-
-
-function queryCoreReportingApi(profileId) {
-  // Query the Core Reporting API for the number sessions for
-  // the past seven days.
-  gapi.client.analytics.data.ga.get({
-    'ids': 'ga:' + profileId,
-    'start-date': '30daysAgo',
-    'end-date': 'yesterday',
-    'metrics': 'ga:sessions,ga:users,ga:avgSessionDuration,ga:pageviews,ga:pageviewsPerSession,ga:bounceRate'
-  })
-  .then(function(response) {
-    var formattedJson = JSON.stringify(response.result, null, 2);
-    console.log(response.result);
-    document.getElementById('sessions').innerHTML = response.result.totalsForAllResults['ga:sessions'];
-    document.getElementById('users').innerHTML = response.result.totalsForAllResults['ga:users'];
-    document.getElementById('avgSessionDuration').innerHTML = response.result.totalsForAllResults['ga:avgSessionDuration'].substr(0, 6).replace(".", ",");
-    document.getElementById('pageviews').innerHTML = response.result.totalsForAllResults['ga:pageviews'];
-    document.getElementById('pageviewsPerSession').innerHTML = response.result.totalsForAllResults['ga:pageviewsPerSession'].substr(0, 5).replace(".", ",");
-    document.getElementById('bounceRate').innerHTML = response.result.totalsForAllResults['ga:bounceRate'].substr(0, 5).replace(".", ",") + ' &percnt;';
-  })
-  .then(null, function(err) {
-      // Log any errors.
-      console.log(err);
-  });
-}
-
-  // Add an event listener to the 'auth-button'.
-  document.getElementById('auth-button').addEventListener('click', authorize);
+(function(w,d,s,g,js,fs){
+  g=w.gapi||(w.gapi={});g.analytics={q:[],ready:function(f){this.q.push(f);}};
+  js=d.createElement(s);fs=d.getElementsByTagName(s)[0];
+  js.src='https://apis.google.com/js/platform.js';
+  fs.parentNode.insertBefore(js,fs);js.onload=function(){g.load('analytics');};
+}(window,document,'script'));
 </script>
 
-<script src="https://apis.google.com/js/client.js?onload=authorize"></script>
+<script>
 
+gapi.analytics.ready(function() {
+
+    /**
+    * Authorize the user immediately if the user has already granted access.
+    * If no access has been created, render an authorize button inside the
+    * element with the ID "embed-api-auth-container".
+    */
+    gapi.analytics.auth.authorize({
+
+        container: 'embed-api-auth-container',
+        clientid: '<?php echo $GLOBALS['PROJECT']['GOOGLE']['API']['CLIENT_ID'] ?>'
+
+    });
+
+    /**
+    * Create a new ViewSelector instance to be rendered inside of an
+    * element with the id "view-selector-container".
+    var viewSelector = new gapi.analytics.ViewSelector({
+        container: 'view-selector-container'
+    });
+     */
+
+
+    // Render the view selector to the page.
+    // viewSelector.execute();
+
+
+    /**
+     * Create a new DataChart instance with the given query parameters
+     * and Google chart options. It will be rendered inside an element
+     * with the id "chart-container".
+     */
+    var dataChart = new gapi.analytics.googleCharts.DataChart({
+        query: {
+            ids: 'ga:<?php echo $GLOBALS['PROJECT']['GOOGLE']['ANALYTICS']['PROFILE'] ?>',
+            metrics: 'ga:users',
+            dimensions: 'ga:date',
+            'start-date': '30daysAgo',
+            'end-date': 'yesterday'
+        },
+        chart: {
+            container: 'chart-container',
+            type: 'LINE',
+            options: {
+                width: '100%'
+            }
+        }
+    }).execute();
+    
+    var dataChart1 = new gapi.analytics.googleCharts.DataChart({
+        query: {
+            ids: 'ga:<?php echo $GLOBALS['PROJECT']['GOOGLE']['ANALYTICS']['PROFILE'] ?>',
+            metrics: 'ga:pageviews,ga:avgTimeOnPage',
+            dimensions: 'ga:pageTitle,ga:pagePath',
+            'start-date': '30daysAgo',
+            'end-date': 'yesterday',
+            sort: '-ga:pageviews',
+            'max-results': 8
+        },
+        chart: {
+            container: 'chart-1-container',
+            type: 'TABLE',
+            options: {
+                width: '100%',
+                pieHole: 4/9
+            }
+        }
+    }).execute();
+    
+    var dataChart2 = new gapi.analytics.googleCharts.DataChart({
+        query: {
+            ids: 'ga:<?php echo $GLOBALS['PROJECT']['GOOGLE']['ANALYTICS']['PROFILE'] ?>',
+            metrics: 'ga:sessions',
+            dimensions: 'ga:deviceCategory',
+            'start-date': '30daysAgo',
+            'end-date': 'yesterday',
+            'max-results': 6,
+            sort: '-ga:sessions'
+        },
+        chart: {
+            container: 'chart-2-container',
+            type: 'PIE',
+            options: {
+              width: '100%',
+              pieHole: 4/9
+            }
+        }
+    }).execute();
+
+
+    /**
+    * Render the dataChart on the page whenever a new view is selected.
+    viewSelector.on('change', function(ids) {
+        dataChart.set({query: {ids: ids}}).execute();
+    });
+    */
+
+    var report = new gapi.analytics.report.Data({
+        query: {
+            ids: 'ga:<?php echo $GLOBALS['PROJECT']['GOOGLE']['ANALYTICS']['PROFILE'] ?>',
+            metrics: 'ga:sessions,ga:users,ga:avgSessionDuration,ga:pageviews,ga:pageviewsPerSession,ga:bounceRate',
+            dimensions: 'ga:date',
+            'start-date': '30daysAgo',
+            'end-date': 'yesterday'
+        }
+    });
+    
+    report.on('success', function(response) {
+        console.log(response);
+        document.getElementById('sessions').innerHTML = response.totalsForAllResults['ga:sessions'];
+        document.getElementById('users').innerHTML = response.totalsForAllResults['ga:users'];
+        document.getElementById('avgSessionDuration').innerHTML = response.totalsForAllResults['ga:avgSessionDuration'].substr(0, 6).replace(".", ",");
+        document.getElementById('pageviews').innerHTML = response.totalsForAllResults['ga:pageviews'];
+        document.getElementById('pageviewsPerSession').innerHTML = response.totalsForAllResults['ga:pageviewsPerSession'].substr(0, 5).replace(".", ",");
+        document.getElementById('bounceRate').innerHTML = response.totalsForAllResults['ga:bounceRate'].substr(0, 5).replace(".", ",") + ' &percnt;';
+    });
+
+    report.execute();
+
+});
+</script>

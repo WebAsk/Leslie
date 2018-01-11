@@ -6,7 +6,7 @@
       <!-- Dropzone.js -->
       <link href="<?php echo FRAMEWORK_URL_TPL ?>/gentellela/vendors/dropzone/dist/min/dropzone.min.css" rel="stylesheet">
       
-      <?php include_once FRAMEWORK_PATH_TPL . '/gentellela/snippets/head.php' ?>
+      <?php include_once FRAMEWORK_PATH_TPL . '/gentellela/sections/head.php' ?>
       
    </head>
 
@@ -14,12 +14,12 @@
       <div class="container body">
         <div class="main_container">
            <div class="col-md-3 left_col">
-              <?php include_once FRAMEWORK_PATH_TPL . '/gentellela/snippets/sidebar.php' ?>
+              <?php include_once FRAMEWORK_PATH_TPL . '/gentellela/sections/sidebar.php' ?>
            </div>
 
            <!-- top navigation -->
            <div class="top_nav">
-             <?php include_once FRAMEWORK_PATH_TPL . '/gentellela/snippets/topnav.php' ?>
+             <?php include_once FRAMEWORK_PATH_TPL . '/gentellela/sections/topnav.php' ?>
            </div>
            <!-- /top navigation -->
 
@@ -85,13 +85,13 @@
 
            <!-- footer content -->
            <footer>
-             <?php include_once FRAMEWORK_PATH_TPL . '/gentellela/snippets/footer.php' ?>
+             <?php include_once FRAMEWORK_PATH_TPL . '/gentellela/sections/footer.php' ?>
            </footer>
            <!-- /footer content -->
         </div>
      </div>
      
-      <?php include_once FRAMEWORK_PATH_TPL . '/gentellela/snippets/foot.php' ?>
+      <?php include_once FRAMEWORK_PATH_TPL . '/gentellela/sections/foot.php' ?>
 
       <!-- Dropzone.js -->
       <script src="<?php echo FRAMEWORK_URL_TPL ?>/gentellela/vendors/dropzone/dist/min/dropzone.min.js"></script>

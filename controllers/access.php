@@ -25,6 +25,13 @@ class access extends base {
         
         parent::__construct($view, $model);
         
+        $GLOBALS['PROJECT']['GOOGLE']['ANALYTICS']['TRACK'] = false;
+
+        
+    }
+
+    function index () {
+        
         if (!empty($_SESSION['code'])) {
             
             $user = $this->model->selectnoview(
@@ -44,13 +51,6 @@ class access extends base {
             exit;
             
         }
-        
-        unset($GLOBALS['PROJECT']['GOOGLE']['ANALYTICS']);
-
-        
-    }
-
-    function index () {
         
         if (!isset($_COOKIE['cookie'])) {
             \leslie::alert(_('Cookie storage is disabled on your browser'));
@@ -521,7 +521,7 @@ class access extends base {
                     
                     $session['code'] = $this->model->session($user['id'], 0);
 
-                    $href = $GLOBALS['PROJECT']['URL']['BASE'] . '/access/confirm/' . $session['code'] . '/sessions';
+                    $href = $GLOBALS['PROJECT']['URL']['BASE'] . '/access/index/confirm/' . $session['code'] . '/sessions';
                     
                     $mail = new \mail();
             
@@ -559,7 +559,7 @@ class access extends base {
 
                 } else if ($session['active'] != 1) {
 
-                    $href = $GLOBALS['PROJECT']['URL']['BASE'] . '/access/confirm/' . $session['code'] . '/sessions';
+                    $href = $GLOBALS['PROJECT']['URL']['BASE'] . '/access/index/confirm/' . $session['code'] . '/sessions';
                     
                     $mail = new \mail();
             
